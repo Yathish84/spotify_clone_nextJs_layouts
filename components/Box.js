@@ -8,7 +8,7 @@ export default function Box({children,className}) {
         `
         bg-neutral-900 
         rounded-lg 
-        h-fit 
+        h-fit
         w-full
         `, 
         className

@@ -27,7 +27,7 @@ export default function Sidebar({children}) {
         }
     ],[pathname])
   return (
-    <div className='flex h-full'>
+    <div className='flex h-screen'>
       <div className=' hidden md:flex flex-col gap-y-2 bg-black h-full w-[300px] p-2 '>
         <Box>
            <div className='flex flex-col gap-y-4 px-5 py-4 '>
@@ -39,7 +39,7 @@ export default function Sidebar({children}) {
                 }
            </div>
         </Box>
-        <Box className='overflow-y-auto w-full h-full'>
+        <Box className='overflow-y-auto w-full h-full flex-1'>
              <Library />
         </Box>
       </div>

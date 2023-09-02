@@ -3,6 +3,8 @@ import './globals.css'
 import { Figtree } from 'next/font/google'
 import SupabaseProvider from '@/providers/SupabaseProvider'
 import UserProvider from '@/providers/UserProvider'
+import { UIProvider } from '@/providers/UIProvider'
+import ToastProvider from '@/providers/ToastProvider'
 
 const font = Figtree({ subsets: ['latin'] })
 
@@ -13,17 +15,21 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className='dark h-full w-full'>
       <body className={font.className}>
-        <SupabaseProvider>
-          <NextuiProvider>
-            <UserProvider>
-              <Sidebar>
-                {children}
-              </Sidebar>
-            </UserProvider>
-          </NextuiProvider>
-        </SupabaseProvider>
+          <SupabaseProvider>
+              <UserProvider>
+                <UIProvider   themeProps={{ defaultTheme: "dark" }}>
+            {/* <ToastProvider> */}
+                  
+                    <Sidebar>
+                      {children}
+                    </Sidebar>
+                 
+              {/* </ToastProvider> */}
+                </UIProvider>
+              </UserProvider>
+          </SupabaseProvider>
         </body>
     </html>
   )

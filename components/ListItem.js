@@ -37,7 +37,7 @@ export default function ListItem({image, name, href}) {
         alt="Image"
       />
     </div>
-    <p className="font-medium truncate py-5">
+    <p className="font-medium truncate py-5 text-white">
       {name}
     </p>
     <div 
