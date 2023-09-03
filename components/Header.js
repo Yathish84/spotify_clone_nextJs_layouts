@@ -6,36 +6,32 @@ import {RxCaretLeft , RxCaretRight} from 'react-icons/rx'
 import { HiHome } from 'react-icons/hi'
 import { BiSearch } from 'react-icons/bi'
 import Button from './Button'
-import Dialog from '../providers/ModalProvider'
-import { Auth } from '@supabase/auth-ui-react'
-import { useSupabaseClient , useSessionContext } from '@supabase/auth-helpers-react' 
-import { ThemeSupa } from '@supabase/auth-ui-shared'
+
+
 import { useUser } from '@/hooks/useUser'
 import { FaUserAlt } from 'react-icons/fa'
 import { Toaster, toast } from 'react-hot-toast'
+import AuthModel from '@/components/AuthModel'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import useAuthModal from '@/hooks/useAuthModel'
 
 export default function Header({className , children}) {
     const [isOpen , setIsOpen] = useState(false)
     const router  = useRouter()
     const supabaseClient = useSupabaseClient()
-    const {session} = useSessionContext() 
-    const {user} = useUser();
     const handleLogOut=async()=>{
         const {error} = await supabaseClient.auth.signOut();
         router.refresh()
-        toast.error("woeking")
+        toast.success('LogOut Success!')
         if(error){
             toast.error(error.message)
             console.log(error)
         }
         // todo : shut down if any song playing
     }
-    useEffect(()=>{
-        if(session){
-            router.refresh()
-            setIsOpen(false)
-        }
-    },[session,router])
+    const {user} = useUser();
+    const authTrigger = useAuthModal()
+    
   return (
     <>
     <div 
@@ -93,7 +89,7 @@ export default function Header({className , children}) {
                     </div>
                     <div>
                         <Button
-                            onClick={() =>{setIsOpen(true)}}
+                            onClick={() =>{authTrigger.onOpen()}}
                             className='bg-white px-6 py-2'
                         >
                         Log in
@@ -106,34 +102,9 @@ export default function Header({className , children}) {
        </div>
        {children}
     </div>
-    <Dialog isOpen={isOpen} title="Welcome" onClose={()=>{setIsOpen(false)}}>
-        <Auth 
-            theme='dark'
-            supabaseClient={supabaseClient}
-            providers={['github','google']}
-            appearance={{ 
-                theme: ThemeSupa, 
-                variables:{
-                    default:{
-                        colors:{
-                            brand:'#404040',
-                            brandAccent:'#22c55e'
-                        }
-                    }}
-                }}
-            
-        />
-    </Dialog>
-    <div>
-    <Toaster 
-        toastOptions={
-            {style:{
-                background:'#333', 
-                color:'#fff'
-            }
-        }}
-    />
-    </div>
+        {/* <AuthModel isOpen={isOpen} setIsOpen={setIsOpen} /> */}
+   
+   
     
     </>
   )

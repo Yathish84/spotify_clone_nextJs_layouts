@@ -5,6 +5,7 @@ import SupabaseProvider from '@/providers/SupabaseProvider'
 import UserProvider from '@/providers/UserProvider'
 import { UIProvider } from '@/providers/UIProvider'
 import ToastProvider from '@/providers/ToastProvider'
+import ModelProvider from '@/providers/ModelProvider'
 
 const font = Figtree({ subsets: ['latin'] })
 
@@ -17,16 +18,19 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className='dark h-full w-full'>
       <body className={font.className}>
+      <ToastProvider /> 
           <SupabaseProvider>
               <UserProvider>
+              <ModelProvider />
                 <UIProvider   themeProps={{ defaultTheme: "dark" }}>
-            {/* <ToastProvider> */}
-                  
+               {/* ToastProvider is added here */}
+             
+                
                     <Sidebar>
                       {children}
                     </Sidebar>
                  
-              {/* </ToastProvider> */}
+             
                 </UIProvider>
               </UserProvider>
           </SupabaseProvider>

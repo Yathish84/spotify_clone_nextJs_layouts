@@ -1,6 +1,6 @@
 import React from 'react'
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
-export default function Dialog({isOpen ,onClose , title , children}) {
+export default function Dialog({isOpen ,onClose , title, desc , children}) {
     // const { onOpenChange} = useDisclosure();
   return (
     <>
@@ -16,7 +16,8 @@ export default function Dialog({isOpen ,onClose , title , children}) {
         <ModalContent>
           {/* {(onClose) => ( */}
             <>
-              <ModalHeader className="flex flex-col gap-1">{title}</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1 text-center">{title}</ModalHeader>
+              <p className=' px-6 text-center'>{desc}</p>
               <ModalBody>
                 {children}
               </ModalBody>

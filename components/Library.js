@@ -1,7 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TbPlaylist } from 'react-icons/tb'
 import { AiOutlinePlus } from 'react-icons/ai'
+import { useUser } from '@/hooks/useUser'
+import useAuthModal from '@/hooks/useAuthModel'
+import useUploadModalTrigger from '@/hooks/useUploadModalTrigger'
 export default function Library() {
+  const authTrigger = useAuthModal()
+  const {user} = useUser()
+  const uploadTrigger = useUploadModalTrigger()
+  const handleClick = () =>{
+    if(!user){
+     return authTrigger.onOpen()
+    }
+    return uploadTrigger.onOpen()
+  }
+
   return (
     <div className='flex flex-col h-full'>
         {/* your library */}
@@ -14,9 +27,12 @@ export default function Library() {
                 >Your Library</p>
             </div>
                 <AiOutlinePlus 
+                    onClick={handleClick}
                     className='text-neutral-400 cursor-pointer hover:text-white transition' 
                     size={20}
                 />
+                
+    
         </div>
         <div className='flex flex-col gap-y-2 mt-4 px-3'>
           <p>List of items!!</p>
